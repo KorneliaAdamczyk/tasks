@@ -9,11 +9,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
-import static java.util.Optional.ofNullable;
-
-
 @Service
 public class SimpleEmailService {
 
@@ -40,13 +35,9 @@ public class SimpleEmailService {
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 
-        //    if (mail.getToCc().equals("")) {
-        //       LOGGER.warn("Additional receiver it has not been set.");
-        //      }else {
-        //     Optional.ofNullable(mail.getToCc()).ifPresent(m->mailMessage.setTo(mail.getToCc()));
-        //     }
-        //  return mailMessage;
-        //   }
+        if (mail.getToCc()!=null){
+            mailMessage.setTo((mail.getToCc()));
+        }
 
         try {
             if (mail.getToCc().equals("")) {

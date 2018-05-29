@@ -29,16 +29,14 @@ public class SimpleEmailServiceTest {
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        if (mail.getToCc().length() > 0) {
-            mailMessage.setCc(mail.getToCc());
-        }
 
-            //When
-            simpleEmailService.send(mail);
+        //When
+        simpleEmailService.send(mail);
 
-            //Then
-            verify(javaMailSender, times(1)).send(mailMessage);
-
-        }
+        //Then
+        verify(javaMailSender, times(1)).send(mailMessage);
 
     }
+}
+
+
