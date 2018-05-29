@@ -9,6 +9,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 
 @Service
@@ -16,10 +19,10 @@ public class SimpleEmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMailMessage.class);
 
-   @Autowired
+    @Autowired
     private JavaMailSender javaMailSender;
 
-    public void send(final Mail mail){
+    public void send(final Mail mail) {
         LOGGER.info("Starting email preparation...");
         try {
             SimpleMailMessage mailMessage = createMailMassage(mail);
@@ -30,20 +33,34 @@ public class SimpleEmailService {
         }
     }
 
-    private SimpleMailMessage createMailMassage (final Mail mail){
+    private SimpleMailMessage createMailMassage(final Mail mail) {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 
-        if (mail.getToCc().equals("")) {
-            LOGGER.warn("Additional receiver it has not been set.");
-        }else {
-            mailMessage.setCc(mail.getToCc());
-        }
-           return mailMessage;
-       }
+        //    if (mail.getToCc().equals("")) {
+        //       LOGGER.warn("Additional receiver it has not been set.");
+        //      }else {
+        //     Optional.ofNullable(mail.getToCc()).ifPresent(m->mailMessage.setTo(mail.getToCc()));
+        //     }
+        //  return mailMessage;
+        //   }
 
+        try {
+            if (mail.getToCc().equals("")) {
+                mailMessage.setTo(mail.getToCc());
+            } else {
+                LOGGER.info("Additional receiver it has not been set.");
+            }
+
+        } catch (NullPointerException e) {
+            LOGGER.info("Complete additional receiver.");
+        }
+        return mailMessage;
     }
+}
+
+
 

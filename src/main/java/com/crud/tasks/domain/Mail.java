@@ -3,6 +3,8 @@ package com.crud.tasks.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Optional;
+
 @Getter
 @AllArgsConstructor
 public class Mail {
@@ -10,7 +12,5 @@ public class Mail {
     private String subject;
     private String message;
     private String toCc;
-
-
 
 }
