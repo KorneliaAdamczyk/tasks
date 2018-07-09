@@ -1,15 +1,22 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.TrelloCardDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+
+import javax.mail.internet.MimeMessage;
+
+import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Matchers.any;
 
@@ -36,9 +43,10 @@ public class SimpleEmailServiceTest {
         simpleEmailService.send(mail);
 
         //Then
-        Mockito.verify(javaMailSender, times(1)).send((SimpleMailMessage) any(MailMessage.class));
+        Mockito.verify(javaMailSender, times(1)).send((MimeMessagePreparator) Matchers.any(Mail.class));
 
     }
+
 }
 
 
