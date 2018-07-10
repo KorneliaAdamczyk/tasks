@@ -13,7 +13,7 @@ public class EmailScheduler {
 
 private static final String SUBJECT = "Tasks: Once a day email";
 
-    @Autowired
+@Autowired
     private SimpleEmailService simpleEmailService;
 
 @Autowired
@@ -22,10 +22,14 @@ private static final String SUBJECT = "Tasks: Once a day email";
 @Autowired
     private AdminConfig adminConfig;
 
-@Scheduled(cron =  "0 0 10 * * *")
+//@Scheduled(cron =  "0 0 10 * * *")
+ //   public void sendInformationEmail(){
+  //  simpleEmailService.send(new Mail(adminConfig.getAdminMail(),SUBJECT, amountOfTasks(), " "));
+//}
+    @Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail(){
-    simpleEmailService.send(new Mail(adminConfig.getAdminMail(),SUBJECT, amountOfTasks(), " "));
-}
+        simpleEmailService.sendDailyMail(new Mail(adminConfig.getAdminMail(),SUBJECT, amountOfTasks(), " "));
+    }
 
 public String amountOfTasks(){
     long size = taskRepository.count();
@@ -33,6 +37,7 @@ public String amountOfTasks(){
         return ("Currently in database you got: " + size + " tasks");
     } else {
         return ("Currently in database you got: " + size + " task");
+
     }
 }
 }
