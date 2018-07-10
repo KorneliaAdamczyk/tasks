@@ -84,7 +84,7 @@ public class TasksControllerTest {
         when(taskMapper.mapToTaskDto(task2)).thenReturn(taskDto2);
 
         //When & Then
-        mockMvc.perform(get("/v1/tasks/taskId").param("taskId","2").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks/2").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id",is(2)))
                .andExpect(jsonPath("$.title",is("Learning")))
